@@ -11,3 +11,9 @@ Phoenix Rising Group Six Project 3 Back End code repository.
 |     	|      GET     	|      Edit  	|
 |     	|      PUT     	|      Update  	|
 |     	|      DELETE   |     Destroy  	|
+
+### Technologies In use
+1. Express
+2. Mongoose
+3. CORS
+4. bcrypt
