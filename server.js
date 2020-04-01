@@ -60,9 +60,17 @@ app.use(cors());
 
 
 /** Controllers */
+// to create, update, destroy templates in our database.
+// MVP - only used to seed the database
 const templatesController = require("./controllers/templates.js");
 
+// to create, update, destroy, show completed gigglelibs from our database.
+const gigglelibsController = require("./controllers/gigglelibs.js");
+
 app.use("/templates", templatesController);
+
+// our application will sit under http://hostname/gigglelibs
+app.use("/gigglelibs", gigglelibsController);
 
 /** Listener */
 
