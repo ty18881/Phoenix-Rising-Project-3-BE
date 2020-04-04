@@ -9,8 +9,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
 const hashedString = bcrypt.hashSync(process.env.SECRET, bcrypt.genSaltSync(10));
-const session = require('express-session')
-
+const userRouter = require('./routes/users')
 const app = express();
 
 /** Database disconnection or error messages */
@@ -37,12 +36,6 @@ mongoose.connection.once('open', ()=> {
 
 app.use(express.json());
 
-/** Session Middleware */
-app.use(session({
-   secret: process.env.SECRET,
-   resave: false,
-   saveUninitialized: false
- }))
 
 /** CORS Middleware */
 // Need to update the whitelist with our production front-end URL
@@ -65,24 +58,26 @@ app.use(cors());
 
 // app.use(cors(corsOptions));
 
-/**Models */
 
+
+/**Models */
+ 
 
 
 /** Controllers */
 // to create, update, destroy templates in our database.
 // MVP - only used to seed the database
 const templatesController = require("./controllers/templates.js");
-const userController = require('./controllers/users.js')
-const sessionsController = require('./controllers/sessions.js')
+
+
 
 
 // to create, update, destroy, show completed gigglelibs from our database.
 const gigglelibsController = require("./controllers/gigglelibs.js");
 
 app.use("/templates", templatesController);
-app.use('/users', userController)
-app.use('/sessions', sessionsController)
+app.use('/', userRouter)
+app.use(require('./config/auth'));
 
 // our application will sit under http://hostname/gigglelibs
 app.use("/gigglelibs", gigglelibsController);
