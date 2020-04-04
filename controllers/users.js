@@ -1,39 +1,40 @@
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.SECRET;
+const express = require('express')
+<<<<<<< HEAD
+const users = express.Router()
+const User = require('../models/users.js')
 
-module.exports = {
-  signup,
-  login
-};
+users.get('/new', (req, res) => {
+  res.render('users/new.ejs')
+})
 
-async function signup(req, res) {
-  const user = new User(req.body);
-  try {
-    await user.save();
-    const token = createJWT(user);
-    res.json({ token });
-  } catch (err) {
-    // Probably a duplicate email
-    res.status(400).json(err);
-  }
-}
+users.post('/', (req, res) => {
+  User.create(req.body, (err, createdUser) => {
+    if (err) {
+      console.log(err)
+    }
+    console.log(createdUser);
+    res.redirect('/')
+  })
+})
 
-async function login(req, res) {
-  try {
-    const user = await User.findOne({username: req.body.username});
-    if (!user) return res.status(401).json({err: 'bad credentials'});
-  } catch (err) {
-    return res.status(401).json(err);
-  }
-}
+module.exports = users
+=======
+const user = express.Router()
+const User = require('../models/users.js')
 
-/*----- Helper Functions -----*/
+user.get('/new', (req, res) => {
+  res.render('users/new.ejs')
+})
 
-function createJWT(user) {
-  return jwt.sign(
-    {user}, // data payload
-    SECRET,
-    {expiresIn: '24h'}
-  );
-}
+user.post('/', (req, res) => {
+    //overwrite the user password with the hashed password, then pass that in to our database
+      req.body.username = req.body.username
+      req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+      User.create(req.body, (err, createdUser) => {    
+            res.redirect('/')
+        });
+    });
+      
+
+module.exports = user
+>>>>>>> 7c4fee3dcb002a3e8d9f211acdc5b64a6b3a087a
