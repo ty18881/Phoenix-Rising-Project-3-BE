@@ -1,39 +1,27 @@
 const User = require('../models/users');
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.SECRET;
+const bcrypt = require('bcrypt')
+const express = require('express');
+const user = express.Router();
 
-module.exports = {
-  signup,
-  login
-};
 
-async function signup(req, res) {
-  const user = new User(req.body);
-  try {
-    await user.save();
-    const token = createJWT(user);
-    res.json({ token });
-  } catch (err) {
-    // Probably a duplicate email
-    res.status(400).json(err);
-  }
-}
+user.get('/', (req, res) => {
+  User.find({}, (err, foundUsers) => {
+    if (err) {
+     res.status(400).json({ error: err.message })
+    }
+    res.status(200).json(foundUsers)
+  })
+})
 
-async function login(req, res) {
-  try {
-    const user = await User.findOne({email: req.body.email});
-    if (!user) return res.status(401).json({err: 'bad credentials'});
-  } catch (err) {
-    return res.status(401).json(err);
-  }
-}
-
-/*----- Helper Functions -----*/
-
-function createJWT(user) {
-  return jwt.sign(
-    {user}, // data payload
-    SECRET,
-    {expiresIn: '24h'}
+user.post("/", (req, res) => {
+  console.log("User Controller" + req.body)
+  req.body.password = bcrypt.hashSync(
+    req.body.password,
+    bcrypt.genSaltSync(10),
   );
-}
+ 
+  User.create(req.body, (err, createdUser) => {
+  });
+});
+
+module.exports = user;
