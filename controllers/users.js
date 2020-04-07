@@ -14,7 +14,9 @@ user.get('/', (req, res) => {
 })
 
 user.post("/", (req, res) => {
-  console.log(req.body);
+
+  console.log("User Controller" + req.body.username)
+
   req.body.password = bcrypt.hashSync(
     req.body.password,
     bcrypt.genSaltSync(10)
