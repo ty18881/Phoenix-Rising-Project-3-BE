@@ -14,14 +14,20 @@ user.get('/', (req, res) => {
 })
 
 user.post("/", (req, res) => {
+
   console.log("User Controller" + req.body.username)
+
   req.body.password = bcrypt.hashSync(
     req.body.password,
-    bcrypt.genSaltSync(10),
+    bcrypt.genSaltSync(10)
   );
- 
   User.create(req.body, (err, createdUser) => {
+    let user = { ...createdUser._doc};
+    delete user.password;
+    res.status(201).json(user);
   });
 });
 
 module.exports = user;
+
+
