@@ -11,15 +11,13 @@ session.delete('/', (req, res)=>{
 });
 
 session.post("/", (req, res) => {
+  console.log("login request to database")
   User.findOne({ username: req.body.username }, (err, foundUser) => {
-    if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-      console.log
+    if (foundUser && bcrypt.compareSync(req.body.password, foundUser.password)) {
       req.session.currentUser = foundUser;
-      let user = { ...foundUser._doc };
-      delete user.password;
-      res.status(201).json(user);
+      res.status(200).send(req.session.currentUser)
     } else {
-      res.status(404).json({ error: "Incorrect username or password" });
+      res.status(404).send("incorrect login")
     }
   });
 });
