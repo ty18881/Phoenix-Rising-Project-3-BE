@@ -66,8 +66,8 @@ app.use(cors());
 // app.use(cors(corsOptions));
 
 /**Models */
-
-
+const seedData = require("./models/seed_template.js");
+const Template = require("./models/template.js");
 
 /** Controllers */
 // to create, update, destroy templates in our database.
@@ -86,6 +86,9 @@ app.use("/templates", templatesController);
 app.use("/gigglelibs", gigglelibsController);
 app.use("/users", userController);
 app.use("/sessions", sessionController);
+
+
+
 /** Listener */
 
 app.listen(process.env.PORT, () => {
