@@ -11,10 +11,10 @@ Phoenix Rising Group Six Project 3 Back End code repository.
 | URL 	| HTTP Verb 	| Action 	|
 |:---:	|-----------	|--------	|
 | /gigglelibs    	|      GET     	|    Index   	|
-|       |      GET    	|     New  	|
+| NewGiggleLib Component     |      GET    	|     New  	|
 | /gigglelibs    	|      POST    	|    Create   	|
-|     	|      GET     	|     Show   	|
-|     	|      GET     	|      Edit  	|
+| Homepage    	|      GET     	|     Show   	|
+| UpdateGiggleLib Component    	|      GET     	|      Edit  	|
 | /gigglelibs/:id    	|      PUT     	|      Update  	|
 | /gigglelibs/:id    	|      DELETE   |     Destroy  	|
 
