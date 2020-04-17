@@ -1,6 +1,9 @@
 {
   "name": "back_end",
   "version": "1.0.0",
+  "engines": {
+      "node": "12.16.2"
+  },
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -24,7 +27,8 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.6",
+    "mongoose": "^5.9.7",
+    "nodemon": "^2.0.3",
     "sessions": "0.0.2-7"
   }
 }

@@ -13,6 +13,18 @@ const session = require('express-session');
 
 const app = express();
 
+/**
+ * PORT SELECTOR
+ */
+
+ const PORT = process.env.PORT || 3000;
+
+ /**
+  * DATABASE CONNECTION
+  */
+
+  const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/giggle-libs";
+
 /** Database disconnection or error messages */
 
 mongoose.connection.on("error", err => console.log(err.message + "is MongoDB not running?"));
@@ -21,7 +33,7 @@ mongoose.connection.on("disconnected", () => console.log("MongoDB disconnected")
 
 /** Connect to the Database */
 
-mongoose.connect(process.env.MONGODB_URI, {     
+mongoose.connect(MONGODB_URI, {     
    useNewUrlParser: true,
    useUnifiedTopology: true,
    useFindAndModify: false,
@@ -91,6 +103,6 @@ app.use("/sessions", sessionController);
 
 /** Listener */
 
-app.listen(process.env.PORT, () => {
-   console.log("Giggles can be found on port: ", process.env.PORT);
+app.listen(PORT, () => {
+   console.log("Giggles can be found on port: ", PORT);
 })
